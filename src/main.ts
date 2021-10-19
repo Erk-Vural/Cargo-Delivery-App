@@ -1,27 +1,10 @@
 import { app, BrowserWindow, ipcMain } from "electron";
-import * as path from "path";
 
-let mainWindow: any;
+import {createLoginWindow} from "./login";
 
 let username: any;
 let password:any;
 
-function createWindow() {
-  // Create the browser window.
-    mainWindow = new BrowserWindow({
-    height: 600,
-    webPreferences: {
-      preload: path.join(__dirname, "preload.js"),
-    },
-    width: 800,
-  });
-
-  // and load the index.html of the app.
-  mainWindow.loadFile(path.join(__dirname, "../index.html"));
-
-  // Open the DevTools.
-  mainWindow.webContents.openDevTools();
-}
 
 // Catch username, and password
 ipcMain.on('username:login', (e,arg) => {
@@ -40,12 +23,12 @@ ipcMain.on('password:login', (e,arg) => {
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.on("ready", () => {
-  createWindow();
+  createLoginWindow();
 
   app.on("activate", function () {
     // On macOS it's common to re-create a window in the app when the
     // dock icon is clicked and there are no other windows open.
-    if (BrowserWindow.getAllWindows().length === 0) createWindow();
+    if (BrowserWindow.getAllWindows().length === 0) createLoginWindow();
   });
 });
 
