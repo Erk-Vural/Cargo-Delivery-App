@@ -5,17 +5,22 @@ import {createLoginWindow} from "./login";
 let username: any;
 let password:any;
 
+const usernames: any[]  = [];
+const passwords: any[] = [];
 
-// Catch username, and password
+
+// Catch username, and password for login
 ipcMain.on('username:login', (e,arg) => {
   username = arg;
-  console.log(username);
+  usernames.push(username);
+  console.log(usernames);
   console.log('this is username main');
 });
 
 ipcMain.on('password:login', (e,arg) => {
   password = arg;
-  console.log(password);
+  passwords.push(password);
+  console.log(passwords);
   console.log('this is password main');
 });
 

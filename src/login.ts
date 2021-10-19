@@ -12,7 +12,7 @@ export function createLoginWindow() : void {
     });
   
     // and load the index.html of the app.
-    loginWindow.loadFile(path.join(__dirname, "../templates/index.html"));
+    loginWindow.loadFile(path.join(__dirname, "../templates/login.html"));
   
     // Open the DevTools.
     loginWindow.webContents.openDevTools();
