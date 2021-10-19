@@ -1,7 +1,7 @@
 {
-  "name": "electron-quick-start-typescript",
+  "name": "cargo-delivery-desktop-app",
   "version": "1.0.0",
-  "description": "A minimal Electron application written with Typescript",
+  "description": "Cargo Delivery Desktop app written with electron and typescript",
   "scripts": {
     "build": "tsc",
     "watch": "tsc -w",

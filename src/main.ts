@@ -1,28 +1,33 @@
 import { app, BrowserWindow, ipcMain } from "electron";
 
-import {createLoginWindow} from "./login";
-
-let username: any;
-let password:any;
-
-const usernames: any[]  = [];
-const passwords: any[] = [];
+import {createLoginWindow, checkLogin} from "./login";
 
 
-// Catch username, and password for login
-ipcMain.on('username:login', (e,arg) => {
-  username = arg;
-  usernames.push(username);
-  console.log(usernames);
-  console.log('this is username main');
+const users = [{
+  username: "user1",
+  password: "123"
+},];
+
+const User = {
+  username: "",
+  password: ""
+}
+
+
+// Catch username, and password for login and check
+ipcMain.on('user:login', (e,arg) => {
+  User.username = arg.username;
+  User.password = arg.password;
+
+  if(checkLogin(users,User) === true){
+    console.log("Login sucsessfull");
+  }else {
+    console.log("Login failed");
+  }
+
+  console.log('this is user main');
 });
 
-ipcMain.on('password:login', (e,arg) => {
-  password = arg;
-  passwords.push(password);
-  console.log(passwords);
-  console.log('this is password main');
-});
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.

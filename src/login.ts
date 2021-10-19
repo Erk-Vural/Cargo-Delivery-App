@@ -16,4 +16,21 @@ export function createLoginWindow() : void {
   
     // Open the DevTools.
     loginWindow.webContents.openDevTools();
-  }
+}
+
+export function checkLogin(users:any,
+  newUser:{ username: string; password: string; }):boolean {
+  
+  let token = false;
+
+  users.forEach((user: { username: string; password: string; }) => {
+
+   if(user.username === newUser.username 
+      && user.password === newUser.password) {
+        
+      token = true;
+    }
+  });
+  
+  return token;
+}
