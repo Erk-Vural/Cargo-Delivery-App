@@ -1,14 +1,16 @@
 // All of the Node.js APIs are available in the preload process.
 // It has the same sandbox as a Chrome extension.
-window.addEventListener("DOMContentLoaded", () => {
-  const replaceText = (selector: string, text: string) => {
-    const element = document.getElementById(selector);
-    if (element) {
-      element.innerText = text;
-    }
-  };
+import { ipcRenderer } from "electron";
 
-  for (const type of ["chrome", "node", "electron"]) {
-    replaceText(`${type}-version`, process.versions[type as keyof NodeJS.ProcessVersions]);
-  }
+window.addEventListener("DOMContentLoaded", () => {
+  const form = document.getElementById('form');
+form.addEventListener('submit', submitForm);
+
+function submitForm(e: { preventDefault: () => void; }) {
+    const username = (<HTMLInputElement>document.getElementById('username')).value;
+    const password = (<HTMLInputElement>document.getElementById('password')).value;
+    
+    ipcRenderer.send('username:login', username);
+    ipcRenderer.send('password:login', password);
+}
 });

@@ -1,9 +1,14 @@
-import { app, BrowserWindow } from "electron";
+import { app, BrowserWindow, ipcMain } from "electron";
 import * as path from "path";
+
+let mainWindow: any;
+
+let username: any;
+let password:any;
 
 function createWindow() {
   // Create the browser window.
-  const mainWindow = new BrowserWindow({
+    mainWindow = new BrowserWindow({
     height: 600,
     webPreferences: {
       preload: path.join(__dirname, "preload.js"),
@@ -17,6 +22,19 @@ function createWindow() {
   // Open the DevTools.
   mainWindow.webContents.openDevTools();
 }
+
+// Catch username, and password
+ipcMain.on('username:login', (e,arg) => {
+  username = arg;
+  console.log(username);
+  console.log('this is username main');
+});
+
+ipcMain.on('password:login', (e,arg) => {
+  password = arg;
+  console.log(password);
+  console.log('this is password main');
+});
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
