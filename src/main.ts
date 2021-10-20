@@ -27,41 +27,56 @@ try {
 }
 
 // Api to communicate with cloud DB
-async function createUser(username:string, password:string) {
-  return new User({
-    username,
-    password
-  }).save()
+async function findUser(uss:string, pass:string) {
+  const data = {
+    username: uss,
+    password: pass
+  }
+  
+  return await User.findOne(data, function(err: any, user: any) {
+    if (err){
+      console.log(err);
+    } 
+    if(!user){
+      console.log("Username or password is invalid");
+    }else {
+      console.log("Logged in");
+    }
+  });
+
 }
 
-async function findUser(username:string, password:string) {
-  User.findOne({ username:username, password:password },
+async function addUser(uss:string, pass:string) {
+  const filter = { username: uss, password: pass};
+  const newUser = { username: uss, password: pass};
+  
+  User.findOneAndUpdate(filter, newUser, { upsert:true},
      function(err: any, doc: any) {
     if (err){
       console.log(err);
     } 
-    else{
-      if(doc === null){
-        return false;
-      }else {
-        console.log(doc);
-        
-        return true;
-      }
+    if(doc === null){
+      console.log("User doesn't exist, adding new user");
+      
+    }else{
+      console.log("User found try to login");
     } 
   } );
 }
 
-async function updateUser(username:string, password:string) {
-  const filter = { username: username};
-  const update = { password: password};
+async function updateUser(uss:string, pass:string) {
+  const filter = { username: uss};
+  const update = { password: pass};
   
-  User.findOneAndUpdate(filter, update,
+  User.findOneAndUpdate(filter, update, { upsert:false},
      function(err: any, doc: any) {
     if (err){
       console.log("Can't update the password");
     } 
-    else{
+    if(doc === null){
+      console.log("User doesn't exist.");
+      
+    }else{
       console.log('Succesfully updated the password');
     } 
   } );
@@ -69,20 +84,14 @@ async function updateUser(username:string, password:string) {
 
 // Catch username, and password for login and check
 ipcMain.on("user:login", (e, arg) => {
-
-  if(findUser( arg.username,arg.password )){
-    console.log("Logged in succesfully");
-  }
+  findUser(arg.username, arg.password);
 });
 
 // Catch username, and password for signup and check
 ipcMain.on("user:signup", (e, arg) => {
 
   if (arg.username !== "" && arg.password !== "") {
-    if(!findUser( arg.username,arg.password )){
-      createUser(arg.username,arg.password);
-      console.log("Sign up succesful");
-    }
+    addUser(arg.username,arg.password);
   }else{
     console.log("Username and password can't be empty");
   }
