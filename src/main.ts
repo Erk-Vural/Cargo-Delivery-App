@@ -1,6 +1,6 @@
 import { app, BrowserWindow, ipcMain } from "electron";
 
-import { createLoginWindow, checkUser, checkPassword } from "./login";
+import { createLoginWindow } from "./login";
 
 // Connect mongoose and create user model
 import mongoose = require('mongoose');
@@ -13,7 +13,7 @@ const userSchema = new mongoose.Schema({
 
 const User = mongoose.model('user', userSchema, 'user')
 
-const connectionString = 'mongodb+srv://erk:hgjM69hNKYTzaR4@cluster0.dtvlw.mongodb.net/cargoDatabase?retryWrites=true&w=majority'
+const connectionString = 'mongodb+srv://erk:hgjM69hNKYTzaR4@cluster0.dtvlw.mongodb.net/cargoDB?retryWrites=true&w=majority'
 
 try {
   // Connect to the MongoDB cluster
@@ -26,71 +26,71 @@ try {
   console.log("could not connect");
 }
 
-// users array to imitade db collection
-const users = [
-  {
-    username: "user1",
-    password: "123",
-  },
-];
+// Api to communicate with cloud DB
+async function createUser(username:string, password:string) {
+  return new User({
+    username,
+    password
+  }).save()
+}
 
-const Useri = {
-  username: "",
-  password: "",
-};
+async function findUser(username:string, password:string) {
+  User.findOne({ username:username, password:password },
+     function(err: any, doc: any) {
+    if (err){
+      console.log(err);
+    } 
+    else{
+      if(doc === null){
+        return false;
+      }else {
+        console.log(doc);
+        
+        return true;
+      }
+    } 
+  } );
+}
+
+async function updateUser(username:string, password:string) {
+  const filter = { username: username};
+  const update = { password: password};
+  
+  User.findOneAndUpdate(filter, update,
+     function(err: any, doc: any) {
+    if (err){
+      console.log("Can't update the password");
+    } 
+    else{
+      console.log('Succesfully updated the password');
+    } 
+  } );
+}
 
 // Catch username, and password for login and check
 ipcMain.on("user:login", (e, arg) => {
-  Useri.username = arg.username;
-  Useri.password = arg.password;
 
-  console.log(User);
-
-  if (checkUser(users, Useri) && checkPassword(users, Useri)) {
-    console.log("Login successful");
-  } else if (checkUser(users, Useri) && !checkPassword(users, Useri)) {
-    console.log("Wrong password");
-  } else {
-    console.log("Login failed");
+  if(findUser( arg.username,arg.password )){
+    console.log("Logged in succesfully");
   }
 });
 
 // Catch username, and password for signup and check
 ipcMain.on("user:signup", (e, arg) => {
-  Useri.username = arg.username;
-  Useri.password = arg.password;
 
-  console.log(User);
-  if (Useri.username !== "" && Useri.password !== "") {
-    if (checkUser(users, Useri) && checkPassword(users, Useri)) {
-      console.log("Signup failed, already have an account");
-    } else if (checkUser(users, Useri) && !checkPassword(users, Useri)) {
-      console.log("Forgot Password?");
-    } else if(!checkUser(users, Useri)){
-      console.log("Signup successful");
+  if (arg.username !== "" && arg.password !== "") {
+    if(!findUser( arg.username,arg.password )){
+      createUser(arg.username,arg.password);
+      console.log("Sign up succesful");
     }
-  } else {
-    console.log("Please Enter username and password to Signup");
+  }else{
+    console.log("Username and password can't be empty");
   }
 });
 
 // Catch username, and password for signup and check
 ipcMain.on("user:forgot", (e, arg) => {
-  Useri.username = arg.username;
-  Useri.password = arg.password;
-
-  console.log(User);
-  if (Useri.username !== "" && Useri.password !== "") {
-    if (checkUser(users, Useri) && checkPassword(users, Useri)) {
-      console.log("New password can't be same old one");
-    } else if (checkUser(users, Useri) && !checkPassword(users, Useri)) {
-      console.log("Password changed successfully");
-    } else if (!checkUser(users, Useri)) {
-      console.log("Can't find user");
-    }
-  } else {
-    console.log("Please Enter username and password to Change password");
-  }
+  updateUser(arg.username,arg.password);
 });
 
 // This method will be called when Electron has finished
