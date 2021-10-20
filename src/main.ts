@@ -1,33 +1,72 @@
 import { app, BrowserWindow, ipcMain } from "electron";
 
-import {createLoginWindow, checkLogin} from "./login";
+import { createLoginWindow, checkUser, checkPassword } from "./login";
 
-
-const users = [{
-  username: "user1",
-  password: "123"
-},];
+const users = [
+  {
+    username: "user1",
+    password: "123",
+  },
+];
 
 const User = {
   username: "",
-  password: ""
-}
-
+  password: "",
+};
 
 // Catch username, and password for login and check
-ipcMain.on('user:login', (e,arg) => {
+ipcMain.on("user:login", (e, arg) => {
   User.username = arg.username;
   User.password = arg.password;
 
-  if(checkLogin(users,User) === true){
-    console.log("Login sucsessfull");
-  }else {
+  console.log(User);
+
+  if (checkUser(users, User) && checkPassword(users, User)) {
+    console.log("Login successful");
+  } else if (checkUser(users, User) && !checkPassword(users, User)) {
+    console.log("Wrong password");
+  } else {
     console.log("Login failed");
   }
-
-  console.log('this is user main');
 });
 
+// Catch username, and password for signup and check
+ipcMain.on("user:signup", (e, arg) => {
+  User.username = arg.username;
+  User.password = arg.password;
+
+  console.log(User);
+  if (User.username !== "" && User.password !== "") {
+    if (checkUser(users, User) && checkPassword(users, User)) {
+      console.log("Signup failed, already have an account");
+    } else if (checkUser(users, User) && !checkPassword(users, User)) {
+      console.log("Forgot Password?");
+    } else if(!checkUser(users, User)){
+      console.log("Signup successful");
+    }
+  } else {
+    console.log("Please Enter username and password to Signup");
+  }
+});
+
+// Catch username, and password for signup and check
+ipcMain.on("user:forgot", (e, arg) => {
+  User.username = arg.username;
+  User.password = arg.password;
+
+  console.log(User);
+  if (User.username !== "" && User.password !== "") {
+    if (checkUser(users, User) && checkPassword(users, User)) {
+      console.log("New password can't be same old one");
+    } else if (checkUser(users, User) && !checkPassword(users, User)) {
+      console.log("Password changed successfully");
+    } else if (!checkUser(users, User)) {
+      console.log("Can't find user");
+    }
+  } else {
+    console.log("Please Enter username and password to Change password");
+  }
+});
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
