@@ -2,6 +2,31 @@ import { app, BrowserWindow, ipcMain } from "electron";
 
 import { createLoginWindow, checkUser, checkPassword } from "./login";
 
+// Connect mongoose and create user model
+import mongoose = require('mongoose');
+import { ConnectOptions } from "mongoose";
+
+const userSchema = new mongoose.Schema({
+  username:String,
+  password:String
+});
+
+const User = mongoose.model('user', userSchema, 'user')
+
+const connectionString = 'mongodb+srv://erk:hgjM69hNKYTzaR4@cluster0.dtvlw.mongodb.net/cargoDatabase?retryWrites=true&w=majority'
+
+try {
+  // Connect to the MongoDB cluster
+   mongoose.connect(
+    connectionString,
+    { useNewUrlParser: true, useUnifiedTopology: true } as ConnectOptions,
+    () => console.log(" Mongoose is connected")
+  );
+} catch (e) {
+  console.log("could not connect");
+}
+
+// users array to imitade db collection
 const users = [
   {
     username: "user1",
@@ -9,21 +34,21 @@ const users = [
   },
 ];
 
-const User = {
+const Useri = {
   username: "",
   password: "",
 };
 
 // Catch username, and password for login and check
 ipcMain.on("user:login", (e, arg) => {
-  User.username = arg.username;
-  User.password = arg.password;
+  Useri.username = arg.username;
+  Useri.password = arg.password;
 
   console.log(User);
 
-  if (checkUser(users, User) && checkPassword(users, User)) {
+  if (checkUser(users, Useri) && checkPassword(users, Useri)) {
     console.log("Login successful");
-  } else if (checkUser(users, User) && !checkPassword(users, User)) {
+  } else if (checkUser(users, Useri) && !checkPassword(users, Useri)) {
     console.log("Wrong password");
   } else {
     console.log("Login failed");
@@ -32,16 +57,16 @@ ipcMain.on("user:login", (e, arg) => {
 
 // Catch username, and password for signup and check
 ipcMain.on("user:signup", (e, arg) => {
-  User.username = arg.username;
-  User.password = arg.password;
+  Useri.username = arg.username;
+  Useri.password = arg.password;
 
   console.log(User);
-  if (User.username !== "" && User.password !== "") {
-    if (checkUser(users, User) && checkPassword(users, User)) {
+  if (Useri.username !== "" && Useri.password !== "") {
+    if (checkUser(users, Useri) && checkPassword(users, Useri)) {
       console.log("Signup failed, already have an account");
-    } else if (checkUser(users, User) && !checkPassword(users, User)) {
+    } else if (checkUser(users, Useri) && !checkPassword(users, Useri)) {
       console.log("Forgot Password?");
-    } else if(!checkUser(users, User)){
+    } else if(!checkUser(users, Useri)){
       console.log("Signup successful");
     }
   } else {
@@ -51,16 +76,16 @@ ipcMain.on("user:signup", (e, arg) => {
 
 // Catch username, and password for signup and check
 ipcMain.on("user:forgot", (e, arg) => {
-  User.username = arg.username;
-  User.password = arg.password;
+  Useri.username = arg.username;
+  Useri.password = arg.password;
 
   console.log(User);
-  if (User.username !== "" && User.password !== "") {
-    if (checkUser(users, User) && checkPassword(users, User)) {
+  if (Useri.username !== "" && Useri.password !== "") {
+    if (checkUser(users, Useri) && checkPassword(users, Useri)) {
       console.log("New password can't be same old one");
-    } else if (checkUser(users, User) && !checkPassword(users, User)) {
+    } else if (checkUser(users, Useri) && !checkPassword(users, Useri)) {
       console.log("Password changed successfully");
-    } else if (!checkUser(users, User)) {
+    } else if (!checkUser(users, Useri)) {
       console.log("Can't find user");
     }
   } else {
