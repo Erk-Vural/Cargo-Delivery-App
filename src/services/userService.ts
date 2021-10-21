@@ -24,7 +24,7 @@ export function findUser(uss: string, pass: string, callback:any) {
   });
 }
 
-export async function addUser(uss: string, pass: string) {
+export async function addUser(uss: string, pass: string, callback:any) {
   const filter = { username: uss, password: pass };
   const newUser = { username: uss, password: pass };
 
@@ -32,20 +32,20 @@ export async function addUser(uss: string, pass: string) {
     filter,
     newUser,
     { upsert: true },
-    function (err: any, doc: any) {
+    function (err: any, user: any) {
       if (err) {
-        console.log(err);
+        return callback(err);
       }
-      if (doc === null) {
-        console.log("User doesn't exist, adding new user");
+      if (!user) {
+        return callback(null,false);
       } else {
-        console.log("User found try to login");
+        return callback(null,true);
       }
     }
   );
 }
 
-export async function updateUser(uss: string, pass: string) {
+export async function updateUser(uss: string, pass: string, callback:any) {
   const filter = { username: uss };
   const update = { password: pass };
 
@@ -53,14 +53,14 @@ export async function updateUser(uss: string, pass: string) {
     filter,
     update,
     { upsert: false },
-    function (err: any, doc: any) {
+    function (err: any, user: any) {
       if (err) {
-        console.log("Can't update the password");
+        return callback(err);
       }
-      if (doc === null) {
-        console.log("User doesn't exist.");
+      if (!user) {
+        return callback(null,false);
       } else {
-        console.log("Succesfully updated the password");
+        return callback(null,true);
       }
     }
   );

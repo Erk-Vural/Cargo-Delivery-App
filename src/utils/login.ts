@@ -29,8 +29,18 @@ export function createLoginWindow():any {
 export function login():void {
  
   ipcMain.on("user:login", (e, arg) => {
-    findUser(arg.username, arg.password, (err:any,user:any) => {
-      console.log(user);
+    findUser(arg.username, arg.password, (err:any,result:any) => {
+      if(!err) {
+        if(result){
+          console.log("Logged in");
+        } else{
+          console.log("Username or password is invalid");
+          
+        }
+      }else{
+        console.log(err);
+  
+      }
     });
   });
 }
@@ -39,7 +49,19 @@ export function signup():void {
   
   ipcMain.on("user:signup", (e, arg) => {
     if (arg.username !== "" && arg.password !== "") {
-      addUser(arg.username,arg.password);
+      addUser(arg.username,arg.password, (err:any,result:any) => {
+        if(!err) {
+          if(result){
+            console.log("User already exist try to login");
+          } else{
+            console.log("Signed in");
+            
+          }
+        }else{
+          console.log(err);
+    
+        }
+      });
     }else{
       console.log("Username and password can't be empty");
     }
@@ -48,6 +70,18 @@ export function signup():void {
 
 export function forgotPass():void {
   ipcMain.on("user:forgot", (e, arg) => {
-    updateUser(arg.username,arg.password);
+    updateUser(arg.username,arg.password,  (err:any,result:any) => {
+      if(!err) {
+        if(result){
+          console.log("Password changed succesfully");
+        } else{
+          console.log("Username is invalid");
+          
+        }
+      }else{
+        console.log(err);
+  
+      }
+    });
   });
 }
