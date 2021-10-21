@@ -8,6 +8,8 @@ const User = {
 };
 
 window.addEventListener("DOMContentLoaded", () => {
+
+  // get data from Login to Main 
   const loginForm = document.getElementById("login-form");
   loginForm.addEventListener("submit", submitLoginForm);
 
@@ -49,4 +51,6 @@ window.addEventListener("DOMContentLoaded", () => {
 
     ipcRenderer.send("user:forgot", User);
   }
+
+  
 });
