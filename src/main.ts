@@ -4,7 +4,6 @@ import { createCargoStatusWindow } from "./utils/cargoStatus";
 import { createLoginWindow, login, signup, forgotPass } from "./utils/login";
 import { createMapWindow } from "./utils/map";
 
-login();
 signup();
 forgotPass();
 
@@ -13,6 +12,10 @@ forgotPass();
 // Some APIs can only be used after this event occurs.
 app.on("ready", () => {
   const loginWindow = createLoginWindow();
+
+  login(loginWindow);
+  signup();
+  forgotPass();
 
   //createCargoStatusWindow(loginWindow);
   //createMapWindow(loginWindow);

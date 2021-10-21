@@ -26,13 +26,17 @@ export function createLoginWindow():any {
 }
 
 // Get data from renderer to main
-export function login():void {
+export function login(loginWindow:BrowserWindow):void {
  
   ipcMain.on("user:login", (e, arg) => {
     findUser(arg.username, arg.password, (err:any,result:any) => {
       if(!err) {
         if(result){
           console.log("Logged in");
+
+          createCargoStatusWindow(loginWindow);
+          createMapWindow(loginWindow);
+
         } else{
           console.log("Username or password is invalid");
           
