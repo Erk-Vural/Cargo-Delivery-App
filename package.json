@@ -1,6 +1,6 @@
 {
   "name": "cargo-delivery-desktop-app",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "Cargo Delivery Desktop app written with electron and typescript",
   "scripts": {
     "build": "tsc",

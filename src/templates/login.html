@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Cargo Delivery App | Login</title>
+    <link rel="stylesheet" type="text/css" href="./styles.css"/>
+    
+    <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self'"
+    />
+    <meta
+      http-equiv="X-Content-Security-Policy"
+      content="default-src 'self'; script-src 'self'"
+    />
+  </head>
+  <body>
+    <div class="login-wrap">
+
+      <div class="buttons"> 
+        <a href="#">Login</a>
+        <a href="#">Sign Up</a>
+      </div>
+
+      <div class="wrapper">
+
+        <form id="login-form">
+          <input type="text"  id='login-uss' placeholder="Username">
+          <input type="text" id="login-pass" placeholder="Password">
+          <button type="submit">Login</button>
+        </form>
+        <div class="foot">
+          <a href="#forgot">Forgot Password?</a>
+        </div>
+      </div>
+
+    <div class="wrapper">
+
+      <form id="signup-form">
+        <input type="text"  id="signup-uss" placeholder="Username">
+        <input type="text" id="signup-pass" placeholder="Password">
+        <button type="submit">Sign Up</button>
+      </form>
+      <div class="foot">
+        <a href="#">Already Member?</a>
+      </div>
+    </div>
+
+    <div class="wrapper">
+
+      <form id="forgot-form">
+        <input type="text"  id="forgot-uss" placeholder="Username">
+        <input type="text" id="forgot-pass" placeholder="Password">
+        <button type="submit">Change Password</button>
+      </form>
+    </div>
+
+    </div>
+
+    <!-- You can also require other files to run in this process -->
+    <script src="../dist/renderer.js"></script>
+  </body>
+</html>

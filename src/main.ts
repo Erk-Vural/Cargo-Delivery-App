@@ -1,6 +1,6 @@
 import { app, BrowserWindow } from "electron";
 
-import { createLoginWindow, login, signup, forgotPass } from "./login";
+import { createLoginWindow, login, signup, forgotPass } from "./utils/login";
 
 login();
 signup();
