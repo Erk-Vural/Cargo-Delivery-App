@@ -5,20 +5,21 @@ DBconnect();
 
 
 // Api to communicate with cloud DB
-export async function findUser(uss: string, pass: string) {
+
+export function findUser(uss: string, pass: string, callback:any) {
   const data = {
     username: uss,
     password: pass,
   };
 
-  return await User.findOne(data, function (err: any, user: any) {
+  User.findOne(data, function (err: any, user: any) {
     if (err) {
-      console.log(err);
+      return callback(err);
     }
     if (!user) {
-      console.log("Username or password is invalid");
+      return callback(null,false);
     } else {
-      console.log("Logged in");
+      return callback(null,true);
     }
   });
 }

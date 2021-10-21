@@ -8,7 +8,7 @@ export function createCargoStatusWindow(mainWindow:any): void {
     height: 1000,
     width: 800,
     webPreferences: {
-      preload: path.join(__dirname, "preload.js"),
+      preload: path.join(__dirname, "../preload.js"),
     },
     parent:mainWindow,
   });

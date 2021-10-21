@@ -6,37 +6,38 @@ import { createCargoStatusWindow } from "./cargoStatus";
 import { createMapWindow } from "./map";
 
 // Create Login window
-export function createLoginWindow(): void {
+export function createLoginWindow():any {
   // Create the browser window.
   const loginWindow = new BrowserWindow({
     height: 600,
     width: 400,
     webPreferences: {
-      preload: path.join(__dirname, "preload.js"),
+      preload: path.join(__dirname, "../preload.js"),
     },
   });
-
-  createCargoStatusWindow(loginWindow);
-  createMapWindow(loginWindow);
 
   // and load the index.html of the app.
   loginWindow.loadFile(path.join(__dirname, "../templates/login.html"));
 
   // Open the DevTools.
   loginWindow.webContents.openDevTools();
+
+  return loginWindow;
 }
 
 // Get data from renderer to main
 export function login():void {
-  // Catch username, and password for login and check
-ipcMain.on("user:login", (e, arg) => {
-  findUser(arg.username, arg.password);
-});
+ 
+  ipcMain.on("user:login", (e, arg) => {
+    findUser(arg.username, arg.password, (err:any,user:any) => {
+      console.log(user);
+    });
+  });
 }
 
 export function signup():void {
+  
   ipcMain.on("user:signup", (e, arg) => {
-
     if (arg.username !== "" && arg.password !== "") {
       addUser(arg.username,arg.password);
     }else{
@@ -50,8 +51,3 @@ export function forgotPass():void {
     updateUser(arg.username,arg.password);
   });
 }
-
-function cargoStatusWindow() {
-  throw new Error("Function not implemented.");
-}
-

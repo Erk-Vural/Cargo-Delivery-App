@@ -1,6 +1,8 @@
 import { app, BrowserWindow } from "electron";
 
+import { createCargoStatusWindow } from "./utils/cargoStatus";
 import { createLoginWindow, login, signup, forgotPass } from "./utils/login";
+import { createMapWindow } from "./utils/map";
 
 login();
 signup();
@@ -10,7 +12,10 @@ forgotPass();
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.on("ready", () => {
-  createLoginWindow();
+  const loginWindow = createLoginWindow();
+
+  //createCargoStatusWindow(loginWindow);
+  //createMapWindow(loginWindow);
 
   app.on("activate", function () {
     // On macOS it's common to re-create a window in the app when the
