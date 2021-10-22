@@ -2,6 +2,7 @@
 // All of the Node.js APIs are available in the preload process.
 // It has the same sandbox as a Chrome extension.
 import { ipcRenderer } from "electron";
+import { createCargoAddWindow } from "./utils/cargoAdd";
 
 const User = {
   username: "",
@@ -10,7 +11,7 @@ const User = {
 
 window.addEventListener("DOMContentLoaded", () => {
 
-  // get data from Login to Main 
+  // get data from Login Formss to Main 
   const loginForm = document.getElementById("login-form");
   loginForm.addEventListener("submit", submitLoginForm);
 
@@ -53,5 +54,13 @@ window.addEventListener("DOMContentLoaded", () => {
     ipcRenderer.send("user:forgot", User);
   }
 
-  
+  const addCargoBtn = document.getElementById('addCargoBtn');
+
+  addCargoBtn.addEventListener('click', () => { 
+    console.log("addCargoBtn Clicked");
+     
+    createCargoAddWindow();
+  });
+
+
 });

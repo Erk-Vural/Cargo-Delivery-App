@@ -17,7 +17,7 @@ export function createLoginWindow():any {
   });
 
   // and load the index.html of the app.
-  loginWindow.loadFile(path.join(__dirname, "../templates/login.html"));
+  loginWindow.loadFile(path.join(__dirname, "../../templates/login.html"));
 
   // Open the DevTools.
   loginWindow.webContents.openDevTools();
@@ -34,8 +34,9 @@ export function login(loginWindow:BrowserWindow):void {
         if(result){
           console.log("Logged in");
 
-          createCargoStatusWindow(loginWindow);
-          createMapWindow(loginWindow);
+          createCargoStatusWindow();
+          createMapWindow();
+          loginWindow.close();
 
         } else{
           console.log("Username or password is invalid");
