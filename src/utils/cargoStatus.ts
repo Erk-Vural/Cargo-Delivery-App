@@ -1,5 +1,6 @@
-import { BrowserWindow, ipcMain } from "electron";
+import { BrowserWindow, ipcMain, } from "electron";
 import * as path from "path";
+import { createCargoAddWindow } from "./cargoAdd";
 
 // Create Cargo Status window
 export function createCargoStatusWindow(): void {
@@ -8,7 +9,7 @@ export function createCargoStatusWindow(): void {
     height: 1000,
     width: 800,
     webPreferences: {
-      preload: path.join(__dirname, "../preload.js"),
+      preload: path.join(__dirname, "../preload/cargoStatus.js"),
     },
  
   });
@@ -19,3 +20,10 @@ export function createCargoStatusWindow(): void {
   // Open the DevTools.
   cargoStatusWindow.webContents.openDevTools();
 }
+
+// addCargo button clicked event handler
+ipcMain.on("click:cargoStatus", (e, arg) => {
+  if(arg){
+    createCargoAddWindow();
+  }
+});

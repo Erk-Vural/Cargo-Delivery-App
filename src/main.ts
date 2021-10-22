@@ -1,8 +1,8 @@
 import { app, BrowserWindow } from "electron";
 
-import { createCargoStatusWindow } from "./utils/cargoStatus";
+import { cargoAdd } from "./utils/cargoAdd";
 import { createLoginWindow, login, signup, forgotPass } from "./utils/login";
-import { createMapWindow } from "./utils/map";
+
 
 signup();
 forgotPass();
@@ -16,6 +16,8 @@ app.on("ready", () => {
   login(loginWindow);
   signup();
   forgotPass();
+
+  cargoAdd();
 
   //createCargoStatusWindow(loginWindow);
   //createMapWindow(loginWindow);

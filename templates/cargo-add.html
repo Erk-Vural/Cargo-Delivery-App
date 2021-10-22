@@ -16,7 +16,16 @@
     />
   </head>
   <body>
-    <h1>Add Cargo</h1>
+
+    <div class="wrapper">
+      <h1>Add new Cargo Address</h1>
+      <form id="cargoadd-form">
+        <input type="text"  id='cargoadd-name' placeholder="Client Name">
+        <input type="text" id="cargoadd-locX" placeholder="Client Location X">
+        <input type="text" id="cargoadd-locY" placeholder="Client Location Y">
+        <button type="submit">Add</button>
+      </form>
+    </div>
 
     <!-- You can also require other files to run in this process -->
     <script src="../dist/renderer.js"></script>
