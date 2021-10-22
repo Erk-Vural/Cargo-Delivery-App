@@ -1,6 +1,6 @@
 import { app, BrowserWindow } from "electron";
 
-import { cargoAdd } from "./utils/cargoAdd";
+import { cargoAdd, cargoList} from "./utils/cargoAdd";
 import { createLoginWindow, login, signup, forgotPass } from "./utils/login";
 
 
@@ -18,9 +18,7 @@ app.on("ready", () => {
   forgotPass();
 
   cargoAdd();
-
-  //createCargoStatusWindow(loginWindow);
-  //createMapWindow(loginWindow);
+  cargoList();
 
   app.on("activate", function () {
     // On macOS it's common to re-create a window in the app when the

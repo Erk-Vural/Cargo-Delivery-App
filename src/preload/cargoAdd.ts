@@ -4,6 +4,7 @@ const Cargo = {
   clientName: "",
   locationX: "",
   locationY: "",
+  delivered: false
 };
 
 window.addEventListener("DOMContentLoaded", () => {
@@ -23,6 +24,12 @@ window.addEventListener("DOMContentLoaded", () => {
     Cargo.locationY = (<HTMLInputElement>(
       document.getElementById("cargoadd-locY")
     )).value;
+
+    const myValue = (<HTMLInputElement>(
+      document.getElementById("cargoadd-del")
+    )).value;
+
+    Cargo.delivered = (myValue === 'true')
 
     ipcRenderer.send("cargo:add", Cargo);
   }

@@ -1,6 +1,6 @@
 import { BrowserWindow, ipcMain, } from "electron";
 import * as path from "path";
-import { createCargoAddWindow } from "./cargoAdd";
+import { cargoList, createCargoAddWindow } from "./cargoAdd";
 
 // Create Cargo Status window
 export function createCargoStatusWindow(): void {

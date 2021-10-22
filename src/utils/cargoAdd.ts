@@ -1,12 +1,14 @@
 import { BrowserWindow, ipcMain } from "electron";
 import * as path from "path";
-import { createCargo } from "../services/cargoService";
+import { createCargo, findCargos } from "../services/cargoService";
 
 
 // Create Cargo Adress window
+let cargoAddWindow:BrowserWindow;
+
 export function createCargoAddWindow(): void {
   // Create the browser window.
-  const cargoAddWindow = new BrowserWindow({
+  cargoAddWindow = new BrowserWindow({
     height: 800,
     width: 600,
     webPreferences: {
@@ -27,9 +29,10 @@ export function cargoAdd():void {
  
   ipcMain.on("cargo:add", (e, arg) => {
 
-    createCargo(arg.clientName, arg.locationX,arg.locationY, (err:any) => {
+    createCargo(arg.clientName, arg.locationX,arg.locationY,arg.delivered, (err:any, result:any) => {
       if(!err) {
-        console.log("Cargo added");
+        console.log(result);
+        cargoAddWindow.close();
 
       }else{
         console.log(err);
@@ -38,3 +41,19 @@ export function cargoAdd():void {
     });
   });
 }
+
+export function cargoList():void {
+  ipcMain.on("cargo:add", (e, arg) => {
+    findCargos((err:any, cargos:any)=> {
+      if(!err) {
+        console.log(cargos);
+
+      }else{
+        console.log(err);
+  
+      }
+    });
+  });
+}
+
+

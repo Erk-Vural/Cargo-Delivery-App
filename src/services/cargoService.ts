@@ -3,19 +3,33 @@ import {Cargo} from "../models/cargoModel";
 
 // Api to communicate with cloud DB
 
-export function createCargo(name:string,locX:string,locY:string, callback:any){
+export function createCargo(name:string,locX:string,locY:string,del:boolean, callback:any){
     const cargo = new Cargo({
         clientName: name,
         locationX: locX,
-        locationY:locY
+        locationY:locY,
+        delivered:del
     });
     
-    cargo.save(function(err:any,result:any){
+    cargo.save((err:any,result:any) =>{
         if (err){
-            return(err);
+            return callback(err);
         }
         else{
-            console.log(result)
+            return callback(err, result);
+        }
+    });
+}
+
+
+export function findCargos(callback:any ){
+
+    Cargo.find((err:any,result:any) =>{
+        if (err){
+            return callback(err);
+        }
+        else{
+            return callback(err, result);
         }
     });
 }
