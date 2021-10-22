@@ -11,24 +11,49 @@ window.addEventListener("DOMContentLoaded", () => {
     });
 
     // List cargos 
-    const list = document.getElementById("listCargos");
+    const cargoList = document.getElementById("listCargos");
 
-    ipcRenderer.on('cargo:list', (err,cargos) => {
+    // Remove old cargoList items
+    function deleteChild(e:any) {
+      //e.firstElementChild can be used.
+      let child = e.lastElementChild; 
+      while (child) {
+          e.removeChild(child);
+          child = e.lastElementChild;
+      }
+    }
+
+    // Get cargos from  add cargo
+    ipcRenderer.on('cargo:cargoList', (err,cargos) => {
+      deleteChild(cargoList);
   
       cargos.forEach((element:any) => {
         const cargo = element._doc;
-                      
-        const listItem = document.createElement('li');
+                    
+        const cargoDiv = document.createElement('div');
 
-        const clientNameText = document.createTextNode("Client Name: " + cargo.clientName);
-        const locationXText = document.createTextNode(" Location X: " + cargo.locationX);
-        const locationYText = document.createTextNode(" Location Y: " + cargo.locationY); 
-        
-        listItem.appendChild(clientNameText);
-        listItem.appendChild(locationXText);
-        listItem.appendChild(locationYText);
 
-        list.appendChild(listItem);
+        const clientName = document.createElement("p")
+        clientName.innerText = "Client Name: " + cargo.clientName;
+        cargoDiv.appendChild(clientName);
+
+        const locationX = document.createElement("p")
+        locationX.innerText = "Location X: " + cargo.locationX;
+        cargoDiv.appendChild(locationX);
+
+        const locationY = document.createElement("p")
+        clientName.innerText = "Location Y: " + cargo.locationY;
+        cargoDiv.appendChild(locationY);
+
+        // Delivered checkbox
+        const delivered = document.createElement("INPUT");
+        delivered.setAttribute("type", "checkbox");
+        delivered.setAttribute("value", cargo.delivered);
+        delivered.setAttribute("id", cargo._id)
+        delivered.setAttribute("name","Delivered");
+        cargoDiv.appendChild(delivered);
+
+        cargoList.appendChild(cargoDiv);
       });
 
     });
