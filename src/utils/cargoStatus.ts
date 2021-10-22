@@ -3,9 +3,11 @@ import * as path from "path";
 import { cargoList, createCargoAddWindow } from "./cargoAdd";
 
 // Create Cargo Status window
+let cargoStatusWindow:BrowserWindow;
+
 export function createCargoStatusWindow(): void {
   // Create the browser window.
-  const cargoStatusWindow = new BrowserWindow({
+  cargoStatusWindow = new BrowserWindow({
     height: 1000,
     width: 800,
     webPreferences: {
@@ -24,6 +26,6 @@ export function createCargoStatusWindow(): void {
 // addCargo button clicked event handler
 ipcMain.on("click:cargoStatus", (e, arg) => {
   if(arg){
-    createCargoAddWindow();
+    createCargoAddWindow(cargoStatusWindow);
   }
 });
