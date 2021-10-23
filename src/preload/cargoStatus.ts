@@ -60,8 +60,19 @@ window.addEventListener("DOMContentLoaded", () => {
         cargoDiv.appendChild(deleteCargoBtn);
 
         cargoList.appendChild(cargoDiv);
-      });
 
+        delivered.addEventListener('click', evt);
+
+        function evt() {
+          const crg = {
+            clientname: this.clientName,
+            delivered: !(this.delivered)
+          }
+
+          ipcRenderer.send("click:delivered", crg);
+        }
+
+      });
     });
 });
 

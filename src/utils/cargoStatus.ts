@@ -1,5 +1,6 @@
 import { BrowserWindow, ipcMain, } from "electron";
 import * as path from "path";
+import { updateCargo } from "../services/cargoService";
 import { cargoList, createCargoAddWindow } from "./cargoAdd";
 
 // Create Cargo Status window
@@ -29,3 +30,21 @@ ipcMain.on("click:cargoStatus", (e, arg) => {
     createCargoAddWindow(cargoStatusWindow);
   }
 });
+
+export function isDelivered(){
+  ipcMain.on("click:delivered", (e, arg) => {
+    updateCargo(arg.clientName,arg.delivered,  (err:any,result:any) => {
+      if(!err) {
+        if(result){
+          console.log("Cargo updated succesfully");
+        } else{
+          console.log("Cargo update failed");
+          
+        }
+      }else{
+        console.log(err);
+  
+      }
+    });
+  });
+}
