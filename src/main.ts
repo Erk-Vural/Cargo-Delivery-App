@@ -1,8 +1,8 @@
 import { app, BrowserWindow } from "electron";
 
-import { cargoAdd, cargoList} from "./utils/cargoAdd";
-import { deleteHandler, deliveredHandler } from "./utils/cargoStatus";
-import { createLoginWindow, login, signup, forgotPass } from "./utils/login";
+import { cargoAdd} from "./windows/cargoAdd";
+import { cargoList, deleteHandler, deliveredHandler } from "./windows/cargoStatus";
+import { createLoginWindow, login, signup, forgotPass } from "./windows/login";
 
 
 signup();
