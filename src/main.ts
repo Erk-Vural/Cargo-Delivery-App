@@ -7,6 +7,7 @@ import {
   deliveredHandler,
 } from "./windows/cargoStatus";
 import { createLoginWindow, login, signup, forgotPass } from "./windows/login";
+import { markerList } from "./windows/map";
 
 
 // This method will be called when Electron has finished
@@ -19,11 +20,15 @@ app.on("ready", () => {
   signup();
   forgotPass();
 
+  // Cargo Window
   cargoAdd();
   cargoList();
 
   deliveredHandler();
   deleteHandler();
+
+  // Map Window
+  markerList();
 
   app.on("activate", function () {
     // On macOS it's common to re-create a window in the app when the
