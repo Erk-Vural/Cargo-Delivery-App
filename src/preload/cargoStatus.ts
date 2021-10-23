@@ -34,6 +34,12 @@ window.addEventListener("DOMContentLoaded", () => {
         
         const cargoDiv = document.createElement('div');
 
+        if(cargo.delivered){
+          cargoDiv.style.backgroundColor = "#90ee90";
+        }else{
+          cargoDiv.style.backgroundColor = "#ffcccb";
+        }
+
         const clientName = document.createElement("p")
         clientName.innerText = "Client Name: " + cargo.clientName;
         cargoDiv.appendChild(clientName);
@@ -47,10 +53,10 @@ window.addEventListener("DOMContentLoaded", () => {
         cargoDiv.appendChild(locationY);
 
         // Delivered checkbox
-        const delivered = document.createElement("INPUT");
+        const delivered = <HTMLInputElement>(document.createElement("INPUT"));
         delivered.id =  cargo.clientName;
+        delivered.checked = cargo.delivered;
         delivered.setAttribute("type", "checkbox");
-        delivered.setAttribute("value", cargo.delivered);
         cargoDiv.appendChild(delivered);
 
         // Delete button
@@ -61,14 +67,19 @@ window.addEventListener("DOMContentLoaded", () => {
 
         cargoList.appendChild(cargoDiv);
 
+        // handle delivered click event
         delivered.addEventListener('click', evt);
 
         function evt() {
+          console.log(evt);
+          
           const crg = {
-            clientname: this.clientName,
-            delivered: !(this.delivered)
+            clientname: this.id,
+            delivered: this.checked
           }
 
+          console.log(crg);
+          
           ipcRenderer.send("click:delivered", crg);
         }
 

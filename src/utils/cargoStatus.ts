@@ -33,7 +33,9 @@ ipcMain.on("click:cargoStatus", (e, arg) => {
 
 export function isDelivered(){
   ipcMain.on("click:delivered", (e, arg) => {
-    updateCargo(arg.clientName,arg.delivered,  (err:any,result:any) => {
+    console.log(arg);
+    
+    updateCargo(arg.clientname,arg.delivered,  (err:any,result:any) => {
       if(!err) {
         if(result){
           console.log("Cargo updated succesfully");
