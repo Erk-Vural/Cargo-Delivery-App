@@ -4,17 +4,15 @@ const Cargo = {
   clientName: "",
   locationX: "",
   locationY: "",
-  delivered: false
+  delivered: false,
 };
 
 window.addEventListener("DOMContentLoaded", () => {
-
-  // get data from Login Formss to Main 
+  // get data from Login Formss to Main
   const cargoAddForm = document.getElementById("cargoadd-form");
   cargoAddForm.addEventListener("submit", submitCargoAddForm);
 
   function submitCargoAddForm(e: { preventDefault: () => void }) {
-  
     Cargo.clientName = (<HTMLInputElement>(
       document.getElementById("cargoadd-name")
     )).value;

@@ -69,7 +69,7 @@ export function deleteHandler() {
 }
 
 export function cargoList(): void {
-  ipcMain.on("update:cargolist", (e, arg) => {
+  ipcMain.on("load:cargolist", (e, arg) => {
     findCargos((err: any, cargos: any) => {
       if (!err) {
         console.log(cargos);

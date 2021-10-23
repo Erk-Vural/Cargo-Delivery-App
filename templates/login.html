@@ -3,8 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <title>Cargo Delivery App | Login</title>
-    <link rel="stylesheet" type="text/css" href="./styles.css"/>
-    
+    <link rel="stylesheet" type="text/css" href="./styles.css" />
+
     <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
     <meta
       http-equiv="Content-Security-Policy"
@@ -17,47 +17,40 @@
   </head>
   <body>
     <div class="login-wrap">
-
-      <div class="buttons"> 
-        <a href="#">Login</a>
-        <a href="#">Sign Up</a>
+      <div class="buttons">
+        <a href="#" id="loadLoginBtn">Login</a>
+        <a href="#" id="loadSignupBtn">Sign Up</a>
       </div>
 
-      <div class="wrapper">
-
+      <div id="login-wrapper">
         <form id="login-form">
-          <input type="text"  id='login-uss' placeholder="Username">
-          <input type="text" id="login-pass" placeholder="Password">
+          <input type="text" id="login-uss" placeholder="Username" />
+          <input type="text" id="login-pass" placeholder="Password" />
           <button type="submit">Login</button>
         </form>
-        <div class="foot">
-          <a href="#forgot">Forgot Password?</a>
-        </div>
       </div>
 
-    <div class="wrapper">
+      <div id="signup-wrapper">
+        <form id="signup-form">
+          <input type="text" id="signup-uss" placeholder="Username" />
+          <input type="text" id="signup-pass" placeholder="Password" />
+          <button type="submit">Sign Up</button>
+        </form>
+      </div>
 
-      <form id="signup-form">
-        <input type="text"  id="signup-uss" placeholder="Username">
-        <input type="text" id="signup-pass" placeholder="Password">
-        <button type="submit">Sign Up</button>
-      </form>
-      <div class="foot">
-        <a href="#">Already Member?</a>
+      <div id="forgot-wrapper">
+        <form id="forgot-form">
+          <input type="text" id="forgot-uss" placeholder="Username" />
+          <input type="text" id="forgot-pass" placeholder="Password" />
+          <button type="submit">Change Password</button>
+        </form>
+      </div>
+
+      <div id="login-foot">
+        <a href="#" id="loadforgotBtn">Forgot Password?</a>
       </div>
     </div>
 
-    <div class="wrapper">
-
-      <form id="forgot-form">
-        <input type="text"  id="forgot-uss" placeholder="Username">
-        <input type="text" id="forgot-pass" placeholder="Password">
-        <button type="submit">Change Password</button>
-      </form>
-    </div>
-
-    </div>
-    
     <!-- You can also require other files to run in this process -->
     <script src="../dist/renderer.js"></script>
   </body>

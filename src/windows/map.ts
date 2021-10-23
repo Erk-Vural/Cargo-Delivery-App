@@ -1,7 +1,6 @@
 import { BrowserWindow, ipcMain } from "electron";
 import * as path from "path";
 
-
 // Create Map window
 export function createMapWindow(): void {
   // Create the browser window.
@@ -11,7 +10,6 @@ export function createMapWindow(): void {
     webPreferences: {
       preload: path.join(__dirname, "../preload/map.js"),
     },
-   
   });
 
   // and load the index.html of the app.

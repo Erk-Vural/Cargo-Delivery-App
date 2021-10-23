@@ -1,12 +1,13 @@
 import { app, BrowserWindow } from "electron";
 
-import { cargoAdd} from "./windows/cargoAdd";
-import { cargoList, deleteHandler, deliveredHandler } from "./windows/cargoStatus";
+import { cargoAdd } from "./windows/cargoAdd";
+import {
+  cargoList,
+  deleteHandler,
+  deliveredHandler,
+} from "./windows/cargoStatus";
 import { createLoginWindow, login, signup, forgotPass } from "./windows/login";
 
-
-signup();
-forgotPass();
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
@@ -23,7 +24,6 @@ app.on("ready", () => {
 
   deliveredHandler();
   deleteHandler();
-
 
   app.on("activate", function () {
     // On macOS it's common to re-create a window in the app when the

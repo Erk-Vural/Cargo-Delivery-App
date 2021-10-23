@@ -12,15 +12,7 @@ function deleteChild(e: any) {
 
 window.addEventListener("DOMContentLoaded", () => {
   // Update Cargo list
-  ipcRenderer.send("update:cargolist", true);
-
-  ipcRenderer.on("update:list", (e, arg) => {
-    if (e) {
-      console.log(e);
-    } else {
-      ipcRenderer.send("update:cargolist", true);
-    }
-  });
+  ipcRenderer.send("load:cargolist", true);
 
   // Handle openAddCargoWindow button
   const addCargoBtn = document.getElementById("addCargoBtn");
