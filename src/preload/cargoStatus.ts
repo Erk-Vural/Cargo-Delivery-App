@@ -19,6 +19,7 @@ window.addEventListener("DOMContentLoaded", () => {
        isClicked =true;
     
       ipcRenderer.send("click:cargoStatus", isClicked);
+      isClicked = false;
     });
 
     // List cargos 
@@ -68,19 +69,27 @@ window.addEventListener("DOMContentLoaded", () => {
         cargoList.appendChild(cargoDiv);
 
         // handle delivered click event
-        delivered.addEventListener('click', evt);
+        delivered.addEventListener('click', deliverEvt);
 
-        function evt() {
-          console.log(evt);
-          
+        function deliverEvt() {
           const crg = {
             clientname: this.id,
             delivered: this.checked
           }
-
-          console.log(crg);
           
           ipcRenderer.send("click:delivered", crg);
+        }
+
+        // handle delete button
+        deleteCargoBtn.addEventListener('click', deleteEvt);
+
+        function deleteEvt() {
+
+          const crg = {
+            clientname: this.id,
+          }
+    
+          ipcRenderer.send("click:deleteCargo", crg);
         }
 
       });

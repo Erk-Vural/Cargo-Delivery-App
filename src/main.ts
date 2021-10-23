@@ -1,7 +1,7 @@
 import { app, BrowserWindow } from "electron";
 
 import { cargoAdd, cargoList} from "./utils/cargoAdd";
-import { isDelivered } from "./utils/cargoStatus";
+import { deleteHandler, deliveredHandler } from "./utils/cargoStatus";
 import { createLoginWindow, login, signup, forgotPass } from "./utils/login";
 
 
@@ -21,7 +21,8 @@ app.on("ready", () => {
   cargoAdd();
   cargoList();
 
-  isDelivered();
+  deliveredHandler();
+  deleteHandler();
 
 
   app.on("activate", function () {

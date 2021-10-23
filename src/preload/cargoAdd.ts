@@ -25,13 +25,8 @@ window.addEventListener("DOMContentLoaded", () => {
       document.getElementById("cargoadd-locY")
     )).value;
 
-    const myValue = (<HTMLInputElement>(
-      document.getElementById("cargoadd-del")
-    )).value;
-
-    Cargo.delivered = (myValue === 'true')
+    Cargo.delivered = false;
 
     ipcRenderer.send("cargo:add", Cargo);
   }
 });
-

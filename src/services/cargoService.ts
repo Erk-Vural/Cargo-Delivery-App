@@ -34,7 +34,7 @@ export function findCargos(callback:any ){
     });
 }
 
-export async function updateCargo(name: string, del: string, callback:any) {
+export function updateCargo(name: string, del: string, callback:any) {
     const filter = { clientName: name };
     const update = { delivered: del };
   
@@ -42,6 +42,24 @@ export async function updateCargo(name: string, del: string, callback:any) {
       filter,
       update,
       { upsert: false },
+      function (err: any, user: any) {
+        if (err) {
+          return callback(err);
+        }
+        if (!user) {
+          return callback(null,false);
+        } else {
+          return callback(null,true);
+        }
+      }
+    );
+  }
+
+  export function deleteCargo(name: string, callback:any) {
+    const find = { clientName: name };
+  
+    Cargo.findOneAndDelete(
+        find,
       function (err: any, user: any) {
         if (err) {
           return callback(err);

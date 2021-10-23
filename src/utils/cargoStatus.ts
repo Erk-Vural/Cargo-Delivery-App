@@ -1,6 +1,6 @@
 import { BrowserWindow, ipcMain, } from "electron";
 import * as path from "path";
-import { updateCargo } from "../services/cargoService";
+import { deleteCargo, updateCargo } from "../services/cargoService";
 import { cargoList, createCargoAddWindow } from "./cargoAdd";
 
 // Create Cargo Status window
@@ -31,7 +31,7 @@ ipcMain.on("click:cargoStatus", (e, arg) => {
   }
 });
 
-export function isDelivered(){
+export function deliveredHandler(){
   ipcMain.on("click:delivered", (e, arg) => {
     console.log(arg);
     
@@ -50,3 +50,22 @@ export function isDelivered(){
     });
   });
 }
+
+  export function deleteHandler(){
+    ipcMain.on("click:deleteCargo", (e, arg) => {
+      
+      deleteCargo(arg.clientname,  (err:any,result:any) => {
+        if(!err) {
+          if(result){
+            console.log("Cargo deleted succesfully");
+          } else{
+            console.log("Cargo deleted failed");
+            
+          }
+        }else{
+          console.log(err);
+    
+        }
+      });
+    });
+  }
