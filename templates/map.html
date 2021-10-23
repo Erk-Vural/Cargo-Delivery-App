@@ -3,24 +3,18 @@
   <head>
     <meta charset="UTF-8" />
     <title>Cargo Delivery App | Map</title>
-    <link rel="stylesheet" type="text/css" href="./styles.css" />
-
-    <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
-    <meta
-      http-equiv="Content-Security-Policy"
-      content="default-src 'self'; script-src 'self'"
-    />
-    <meta
-      http-equiv="X-Content-Security-Policy"
-      content="default-src 'self'; script-src 'self'"
-    />
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+    <link rel="stylesheet" type="text/css" href="../static/css/map.css" />
   </head>
   <body>
-    <iframe
-      src="https://www.google.com.tr/maps/@40.7673442,29.9343003,16z?hl=en&authuser=0"
-    />
+    <div id="map"></div>
 
     <!-- You can also require other files to run in this process -->
-    <script src="../dist/renderer.js"></script>
+    <script src="../dist/renderer/map.js"></script>
+
+    <script
+      defer
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDv9iNeDL_kmNc5OU-syA4Ijhxq5QoS6TY&callback=initMap"
+    ></script>
   </body>
 </html>

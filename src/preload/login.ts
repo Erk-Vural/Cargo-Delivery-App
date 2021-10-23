@@ -9,43 +9,6 @@ const User = {
 };
 
 window.addEventListener("DOMContentLoaded", () => {
-  // hide all divs
-  document.getElementById("signup-wrapper").style.display = "none";
-  document.getElementById("forgot-wrapper").style.display = "none";
-
-  // Handle buttons to dynamic login
-  const loadLoginBtn = document.getElementById("loadLoginBtn");
-
-  loadLoginBtn.addEventListener("click", () => {
-    document.getElementById("login-wrapper").style.display = "initial";
-    document.getElementById("signup-wrapper").style.display = "none";
-    document.getElementById("forgot-wrapper").style.display = "none";
-
-    document.getElementById("login-foot").style.display = "initial";
-    document.getElementById("signup-foot").style.display = "none";
-  });
-
-  const loadSignupBtn = document.getElementById("loadSignupBtn");
-
-  loadSignupBtn.addEventListener("click", () => {
-    document.getElementById("login-wrapper").style.display = "none";
-    document.getElementById("signup-wrapper").style.display = "initial";
-    document.getElementById("forgot-wrapper").style.display = "none";
-
-    document.getElementById("login-foot").style.display = "none";
-    document.getElementById("signup-foot").style.display = "initial";
-  });
-
-  const loadForgotBtn = document.getElementById("login-foot").querySelector("#loadforgotBtn");
-
-  loadForgotBtn.addEventListener("click", () => {
-    document.getElementById("login-wrapper").style.display = "none";
-    document.getElementById("signup-wrapper").style.display = "none";
-    document.getElementById("forgot-wrapper").style.display = "initial";
-
-    document.getElementById("login-foot").style.display = "none";
-    document.getElementById("signup-foot").style.display = "none";
-  });
 
   // get data from Login Formss to Main
   const loginForm = document.getElementById("login-form");
