@@ -5,10 +5,9 @@ import { findUser, addUser, updateUser } from "../services/userService";
 import { createCargoStatusWindow } from "./cargoStatus";
 import { createMapWindow } from "./map";
 
-
 // Window clones for communication
-let cargoStatusWindow:BrowserWindow;
-let mapWindow:BrowserWindow;
+let cargoStatusWindow: BrowserWindow;
+let mapWindow: BrowserWindow;
 
 // Create Login window
 export function createLoginWindow(): any {
@@ -37,7 +36,6 @@ export function login(loginWindow: BrowserWindow): void {
       if (!err) {
         if (result) {
           console.log("Logged in");
-
 
           cargoStatusWindow = createCargoStatusWindow();
 

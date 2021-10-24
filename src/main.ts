@@ -9,7 +9,6 @@ import {
 import { createLoginWindow, login, signup, forgotPass } from "./windows/login";
 import { markerList } from "./windows/map";
 
-
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
@@ -45,7 +44,6 @@ app.on("window-all-closed", () => {
     app.quit();
   }
 });
-
 
 function getMarkers() {
   throw new Error("Function not implemented.");

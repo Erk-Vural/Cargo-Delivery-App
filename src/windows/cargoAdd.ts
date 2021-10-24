@@ -44,7 +44,6 @@ export function cargoAdd(): void {
         arg.delivered,
         (err: any, cargo: any) => {
           if (!err) {
-
             updateCargoList();
             updateMarkers();
 

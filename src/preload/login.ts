@@ -9,7 +9,6 @@ const User = {
 };
 
 window.addEventListener("DOMContentLoaded", () => {
-
   // get data from Login Formss to Main
   const loginForm = document.getElementById("login-form");
   loginForm.addEventListener("submit", submitLoginForm);

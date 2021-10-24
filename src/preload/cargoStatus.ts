@@ -104,9 +104,7 @@ window.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  
   ipcRenderer.on("map:addMarker", (e, arg) => {
-
     ipcRenderer.send("cargoStatus:addMarker", arg);
   });
 });

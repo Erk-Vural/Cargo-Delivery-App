@@ -10,7 +10,6 @@ let markers: google.maps.Marker[] = [];
 
 const startPoint = { lat: 47.701, lng: -122.36 };
 
-
 const loader = new Loader({
   apiKey: "AIzaSyDv9iNeDL_kmNc5OU-syA4Ijhxq5QoS6TY",
   version: "weekly",
@@ -37,13 +36,12 @@ loader.load().then(() => {
           lng: Number(cargo.locationY),
         };
 
-        addMarker(latLang,false);
+        addMarker(latLang, false);
       }
     });
     // Adds a marker at the center of the map.
-    addMarker(startPoint,true);
+    addMarker(startPoint, true);
   });
-
 
   // This event listener will call addMarker() when the map is clicked.
   map.addListener("click", (event: google.maps.MapMouseEvent) => {
@@ -56,13 +54,16 @@ loader.load().then(() => {
 // Utils
 
 // Adds a marker to the map and push to the array.
-function addMarker(position: google.maps.LatLng | google.maps.LatLngLiteral, carrier:boolean) {
+function addMarker(
+  position: google.maps.LatLng | google.maps.LatLngLiteral,
+  carrier: boolean
+) {
   const marker = new google.maps.Marker({
     position,
     map,
   });
-  if(carrier){
-    marker.setIcon('http://maps.google.com/mapfiles/ms/icons/green-dot.png');
+  if (carrier) {
+    marker.setIcon("http://maps.google.com/mapfiles/ms/icons/green-dot.png");
   }
   markers.push(marker);
 }

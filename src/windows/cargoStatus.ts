@@ -6,7 +6,7 @@ import { updateMarkers } from "./map";
 
 // Create Cargo Status window
 let cargoStatusWindow: BrowserWindow;
-let addCargoWindow:BrowserWindow;
+let addCargoWindow: BrowserWindow;
 
 export function createCargoStatusWindow(): any {
   // Create the browser window.
@@ -48,7 +48,6 @@ export function deliveredHandler() {
           updateCargoList();
 
           updateMarkers();
-
         } else {
           console.log("Cargo update failed");
         }
@@ -65,7 +64,7 @@ export function deleteHandler() {
       if (!err) {
         if (result) {
           console.log("Cargo deleted succesfully");
-          
+
           updateCargoList();
 
           updateMarkers();
@@ -83,7 +82,6 @@ export function cargoList(): void {
   ipcMain.on("load:cargolist", (e, arg) => {
     findCargos((err: any, cargos: any) => {
       if (!err) {
-
         cargoStatusWindow.webContents.send("cargo:list", cargos);
       } else {
         console.log(err);
@@ -95,7 +93,6 @@ export function cargoList(): void {
 export function updateCargoList(): void {
   findCargos((err: any, cargos: any) => {
     if (!err) {
-
       cargoStatusWindow.webContents.send("cargo:list", cargos);
     } else {
       console.log(err);
@@ -103,7 +100,6 @@ export function updateCargoList(): void {
   });
 }
 
-
-ipcMain.on("cargoStatus:addMarker", (e,arg) => {
+ipcMain.on("cargoStatus:addMarker", (e, arg) => {
   addCargoWindow.webContents.send("cargoStatusMain:addMarker", arg);
 });
