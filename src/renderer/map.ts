@@ -7,9 +7,9 @@ const additionalOptions = {};
 
 // Direction Options
 let directionsDisplay: google.maps.DirectionsRenderer;
-const directionsService = new google.maps.DirectionsService();
+let directionsService: google.maps.DirectionsService;
 let size = 0;
-let currentPosition;
+let currentPosition = { lat: 47.701, lng: -122.36 };
 
 // An array to store results from Google routing API.
 let routeResults: any[] = [];
@@ -17,8 +17,6 @@ let routeResults: any[] = [];
 // Load map
 let markers: google.maps.Marker[] = [];
 const places: { latLng: any }[] = [];
-
-const startPoint = { lat: 47.701, lng: -122.36 };
 
 const loader = new Loader({
   apiKey: "AIzaSyDv9iNeDL_kmNc5OU-syA4Ijhxq5QoS6TY",
@@ -29,9 +27,10 @@ const loader = new Loader({
 // InitMap()
 loader.load().then(() => {
   directionsDisplay = new google.maps.DirectionsRenderer();
+  directionsService = new google.maps.DirectionsService();
 
   map = new google.maps.Map(document.getElementById("map") as HTMLElement, {
-    center: startPoint,
+    center: currentPosition,
     zoom: 8,
   });
 
@@ -44,24 +43,29 @@ loader.load().then(() => {
     cargos.forEach((element: any) => {
       const cargo = element._doc;
 
-      const latLang = {
-        lat: Number(cargo.locationX),
-        lng: Number(cargo.locationY),
-      };
+      if (!cargo.delivered) {
+        const latLang = {
+          lat: Number(cargo.locationX),
+          lng: Number(cargo.locationY),
+        };
 
-      const place = {
-        title: cargo.clientName,
-        latLng: new google.maps.LatLng(
-          Number(cargo.locationX),
-          Number(cargo.locationY)
-        ),
-      };
+        const place = {
+          title: cargo.clientName,
+          latLng: new google.maps.LatLng(
+            Number(cargo.locationX),
+            Number(cargo.locationY)
+          ),
+        };
 
-      places.push(place);
-      addMarker(latLang, false);
+        places.push(place);
+        addMarker(latLang, false, cargo.clientName);
+      }
     });
     // Adds a marker at the center of the map.
-    addMarker(startPoint, true);
+    addMarker(currentPosition, true, "courier");
+
+    // Find Shortest
+    findNearestPlace();
   });
 
   // This event listener will call addMarker() when the map is clicked.
@@ -70,8 +74,6 @@ loader.load().then(() => {
 
     ipcRenderer.send("click:addMarker", latLng);
   });
-
-  findNearestPlace();
 });
 
 // Direction Utils
@@ -93,7 +95,7 @@ function calcRoute(
   callback: { (data: any): void; (arg0: google.maps.DirectionsResult): void }
 ) {
   const request = {
-    origin: startPoint,
+    origin: currentPosition,
     destination: end,
     travelMode: google.maps.TravelMode.DRIVING,
   };
@@ -127,6 +129,8 @@ function findShortest() {
       shortestLength = routeResults[i].routes[0].legs[0].distance.value;
     }
   }
+  console.log(routeResults[shortestIndex].request.destination.location);
+  currentPosition = routeResults[shortestIndex].request.destination.location;
   directionsDisplay.setDirections(routeResults[shortestIndex]);
 }
 
@@ -135,11 +139,13 @@ function findShortest() {
 // Adds a marker to the map and push to the array.
 function addMarker(
   position: google.maps.LatLng | google.maps.LatLngLiteral,
-  carrier: boolean
+  carrier: boolean,
+  title: string
 ) {
   const marker = new google.maps.Marker({
     position,
     map,
+    title: title,
   });
   if (carrier) {
     marker.setIcon("http://maps.google.com/mapfiles/ms/icons/green-dot.png");
