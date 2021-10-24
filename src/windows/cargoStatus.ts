@@ -2,12 +2,13 @@ import { BrowserWindow, ipcMain } from "electron";
 import * as path from "path";
 import { deleteCargo, findCargos, updateCargo } from "../services/cargoService";
 import { createCargoAddWindow } from "./cargoAdd";
+import { updateMarkers } from "./map";
 
 // Create Cargo Status window
 let cargoStatusWindow: BrowserWindow;
-let mapWindow:BrowserWindow
 
-export function createCargoStatusWindow(mpWindow:BrowserWindow): any {
+
+export function createCargoStatusWindow(): any {
   // Create the browser window.
   cargoStatusWindow = new BrowserWindow({
     height: 1000,
@@ -25,9 +26,6 @@ export function createCargoStatusWindow(mpWindow:BrowserWindow): any {
   // Open the DevTools.
   cargoStatusWindow.webContents.openDevTools();
 
-  mapWindow = mpWindow;
-
-  return cargoStatusWindow;
 }
 
 // addCargo button clicked event handler
@@ -48,7 +46,7 @@ export function deliveredHandler() {
 
           updateCargoList();
 
-          mapWindow.webContents.send("click:hideMarker", true);
+          updateMarkers();
 
         } else {
           console.log("Cargo update failed");
@@ -69,7 +67,7 @@ export function deleteHandler() {
           
           updateCargoList();
 
-          mapWindow.webContents.send("click:deleteMarker", true);
+          updateMarkers();
         } else {
           console.log("Cargo deleted failed");
         }

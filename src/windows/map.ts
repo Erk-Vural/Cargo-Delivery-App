@@ -6,7 +6,7 @@ import { findCargos } from "../services/cargoService";
 let mapWindow: BrowserWindow;
 
 
-export function createMapWindow(cargoStatusWindow:BrowserWindow): any {
+export function createMapWindow(): any {
   // Create the browser window.
   mapWindow = new BrowserWindow({
     height: 1000,
@@ -23,8 +23,6 @@ export function createMapWindow(cargoStatusWindow:BrowserWindow): any {
 
   // Open the DevTools.
   mapWindow.webContents.openDevTools();
-
-  return mapWindow;
 }
 
 export function markerList(): void {
@@ -37,5 +35,16 @@ export function markerList(): void {
         console.log(err);
       }
     });
+  });
+}
+
+export function updateMarkers(): void {
+  findCargos((err: any, cargos: any) => {
+    if (!err) {
+
+      mapWindow.webContents.send("marker:list", cargos);
+    } else {
+      console.log(err);
+    }
   });
 }

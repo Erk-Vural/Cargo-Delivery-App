@@ -8,22 +8,6 @@ const additionalOptions = {};
 // Load map
 let markers: google.maps.Marker[] = [];
 
-// load markers to mapWindow
-ipcRenderer.on("marker:list", (err, cargos) => {
-  cargos.forEach((element: any) => {
-    const cargo = element._doc;
-
-    if (!cargo.delivered) {
-      const latLang = {
-        lat: Number(cargo.locationX),
-        lng: Number(cargo.locationY),
-      };
-
-      addMarker(latLang);
-    }
-  });
-});
-
 const startPoint = { lat: 47.5300099, lng: -122.209046 };
 
 const loader = new Loader({
@@ -44,21 +28,26 @@ loader.load().then(() => {
     addMarker(event.latLng!);
   });
 
-  // Delivered, Delete check
-  ipcRenderer.on("click:deleteMarker", (e,arg) => {
-    if(e){
-      console.log("delete marker has an error" + e);
-      
-    }else {
-      if(arg){
-        deleteMarkers();
-      }
-    }
-  })
+  // load  and update markers to mapWindow
+  ipcRenderer.on("marker:list", (err, cargos) => {
+    deleteMarkers();
 
-  ipcRenderer.on("click:delivered", (e,arg) => {
+    console.log("pacgave");
     
-  })
+
+    cargos.forEach((element: any) => {
+      const cargo = element._doc;
+
+      if (!cargo.delivered) {
+        const latLang = {
+          lat: Number(cargo.locationX),
+          lng: Number(cargo.locationY),
+        };
+
+        addMarker(latLang);
+      }
+    });
+  });
 
   // Adds a marker at the center of the map.
   addMarker(startPoint);
@@ -86,11 +75,6 @@ function setMapOnAll(map: google.maps.Map | null) {
 // Removes the markers from the map, but keeps them in the array.
 function hideMarkers(): void {
   setMapOnAll(null);
-}
-
-// Shows any markers currently in the array.
-function showMarkers(): void {
-  setMapOnAll(map);
 }
 
 // Deletes all markers in the array by removing references to them.
