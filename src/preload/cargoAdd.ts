@@ -27,4 +27,13 @@ window.addEventListener("DOMContentLoaded", () => {
 
     ipcRenderer.send("cargo:add", Cargo);
   }
+
+  ipcRenderer.on("cargoStatusMain:addMarker", (e,arg) => {
+    console.log(arg);
+    
+    (<HTMLInputElement>(document.getElementById("cargoadd-locX"))).value = arg.lat;
+    (<HTMLInputElement>(document.getElementById("cargoadd-locY"))).value = arg.lng;
+
+  });
+
 });

@@ -8,7 +8,7 @@ import { updateMarkers } from "./map";
 let cargoAddWindow: BrowserWindow;
 let cargoStatusWindow: BrowserWindow;
 
-export function createCargoAddWindow(parentWindow: BrowserWindow): void {
+export function createCargoAddWindow(parentWindow: BrowserWindow): any {
   // Create the browser window.
   cargoAddWindow = new BrowserWindow({
     height: 800,
@@ -28,6 +28,8 @@ export function createCargoAddWindow(parentWindow: BrowserWindow): void {
 
   // Open the DevTools.
   cargoAddWindow.webContents.openDevTools();
+
+  return cargoAddWindow;
 }
 
 // Get data from renderer to main

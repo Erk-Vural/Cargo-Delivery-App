@@ -38,9 +38,10 @@ export function login(loginWindow: BrowserWindow): void {
         if (result) {
           console.log("Logged in");
 
-          createMapWindow();
 
-          createCargoStatusWindow();
+          cargoStatusWindow = createCargoStatusWindow();
+
+          createMapWindow(cargoStatusWindow);
 
           loginWindow.close();
         } else {

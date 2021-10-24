@@ -8,7 +8,8 @@ const additionalOptions = {};
 // Load map
 let markers: google.maps.Marker[] = [];
 
-const startPoint = { lat: 47.5300099, lng: -122.209046 };
+const startPoint = { lat: 47.701, lng: -122.36 };
+
 
 const loader = new Loader({
   apiKey: "AIzaSyDv9iNeDL_kmNc5OU-syA4Ijhxq5QoS6TY",
@@ -23,17 +24,9 @@ loader.load().then(() => {
     zoom: 8,
   });
 
-  // This event listener will call addMarker() when the map is clicked.
-  map.addListener("click", (event: google.maps.MapMouseEvent) => {
-    addMarker(event.latLng!);
-  });
-
   // load  and update markers to mapWindow
   ipcRenderer.on("marker:list", (err, cargos) => {
     deleteMarkers();
-
-    console.log("pacgave");
-    
 
     cargos.forEach((element: any) => {
       const cargo = element._doc;
@@ -44,21 +37,33 @@ loader.load().then(() => {
           lng: Number(cargo.locationY),
         };
 
-        addMarker(latLang);
+        addMarker(latLang,false);
       }
     });
+    // Adds a marker at the center of the map.
+    addMarker(startPoint,true);
+  });
+
+
+  // This event listener will call addMarker() when the map is clicked.
+  map.addListener("click", (event: google.maps.MapMouseEvent) => {
+    const latLng = event.latLng.toJSON();
+
+    ipcRenderer.send("click:addMarker", latLng);
   });
 });
 
 // Utils
 
 // Adds a marker to the map and push to the array.
-function addMarker(position: google.maps.LatLng | google.maps.LatLngLiteral) {
+function addMarker(position: google.maps.LatLng | google.maps.LatLngLiteral, carrier:boolean) {
   const marker = new google.maps.Marker({
     position,
     map,
   });
-
+  if(carrier){
+    marker.setIcon('http://maps.google.com/mapfiles/ms/icons/green-dot.png');
+  }
   markers.push(marker);
 }
 

@@ -62,6 +62,15 @@ window.addEventListener("DOMContentLoaded", () => {
       delivered.setAttribute("type", "checkbox");
       cargoDiv.appendChild(delivered);
 
+      // Delivered Label
+      const deliveredLabel = document.createElement("label");
+      deliveredLabel.setAttribute("for", cargo.clientName);
+      deliveredLabel.innerText = "Delivered";
+      cargoDiv.appendChild(deliveredLabel);
+
+      const br = document.createElement("br");
+      cargoDiv.appendChild(br);
+
       // Delete button
       const deleteCargoBtn = document.createElement("button");
       deleteCargoBtn.id = cargo.clientName;
@@ -93,5 +102,11 @@ window.addEventListener("DOMContentLoaded", () => {
         ipcRenderer.send("click:deleteCargo", crg);
       }
     });
+  });
+
+  
+  ipcRenderer.on("map:addMarker", (e, arg) => {
+
+    ipcRenderer.send("cargoStatus:addMarker", arg);
   });
 });

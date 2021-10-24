@@ -6,7 +6,7 @@ import { updateMarkers } from "./map";
 
 // Create Cargo Status window
 let cargoStatusWindow: BrowserWindow;
-
+let addCargoWindow:BrowserWindow;
 
 export function createCargoStatusWindow(): any {
   // Create the browser window.
@@ -26,12 +26,13 @@ export function createCargoStatusWindow(): any {
   // Open the DevTools.
   cargoStatusWindow.webContents.openDevTools();
 
+  return cargoStatusWindow;
 }
 
 // addCargo button clicked event handler
 ipcMain.on("click:openAddCargo", (e, arg) => {
   if (arg) {
-    createCargoAddWindow(cargoStatusWindow);
+    addCargoWindow = createCargoAddWindow(cargoStatusWindow);
   }
 });
 
@@ -101,3 +102,8 @@ export function updateCargoList(): void {
     }
   });
 }
+
+
+ipcMain.on("cargoStatus:addMarker", (e,arg) => {
+  addCargoWindow.webContents.send("cargoStatusMain:addMarker", arg);
+});

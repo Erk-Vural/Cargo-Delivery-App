@@ -4,9 +4,9 @@ import { findCargos } from "../services/cargoService";
 
 // Create Map window
 let mapWindow: BrowserWindow;
+let cargoStatusWindow: BrowserWindow;
 
-
-export function createMapWindow(): any {
+export function createMapWindow(cargoStatusWdw:BrowserWindow): any {
   // Create the browser window.
   mapWindow = new BrowserWindow({
     height: 1000,
@@ -23,6 +23,8 @@ export function createMapWindow(): any {
 
   // Open the DevTools.
   mapWindow.webContents.openDevTools();
+
+  cargoStatusWindow = cargoStatusWdw;
 }
 
 export function markerList(): void {
@@ -48,3 +50,8 @@ export function updateMarkers(): void {
     }
   });
 }
+
+ipcMain.on("click:addMarker", (e,arg)=>{
+
+  cargoStatusWindow.webContents.send("map:addMarker", arg);
+});
