@@ -72,7 +72,6 @@ export function cargoList(): void {
   ipcMain.on("load:cargolist", (e, arg) => {
     findCargos((err: any, cargos: any) => {
       if (!err) {
-        console.log(cargos);
 
         cargoStatusWindow.webContents.send("cargo:list", cargos);
       } else {
@@ -85,7 +84,6 @@ export function cargoList(): void {
 export function updateCargoList(): void {
   findCargos((err: any, cargos: any) => {
     if (!err) {
-      console.log(cargos);
 
       cargoStatusWindow.webContents.send("cargo:list", cargos);
     } else {

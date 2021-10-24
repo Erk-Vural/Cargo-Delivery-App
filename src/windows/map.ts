@@ -12,6 +12,8 @@ export function createMapWindow(): void {
     width: 800,
     webPreferences: {
       preload: path.join(__dirname, "../preload/map.js"),
+      nodeIntegration: true,
+      contextIsolation: false,
     },
   });
 
@@ -26,7 +28,7 @@ export function markerList(): void {
   ipcMain.on("load:markerlist", (e, arg) => {
     findCargos((err: any, cargos: any) => {
       if (!err) {
-        console.log(cargos);
+        console.log("Window marker list works");
 
         mapWindow.webContents.send("marker:list", cargos);
       } else {
@@ -39,7 +41,6 @@ export function markerList(): void {
 export function updateMarkers(): void {
   findCargos((err: any, cargos: any) => {
     if (!err) {
-      console.log(cargos);
 
       mapWindow.webContents.send("marker:list", cargos);
     } else {
