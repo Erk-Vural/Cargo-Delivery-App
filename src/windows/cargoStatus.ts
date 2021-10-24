@@ -5,8 +5,9 @@ import { createCargoAddWindow } from "./cargoAdd";
 
 // Create Cargo Status window
 let cargoStatusWindow: BrowserWindow;
+let mapWindow:BrowserWindow
 
-export function createCargoStatusWindow(): void {
+export function createCargoStatusWindow(mpWindow:BrowserWindow): any {
   // Create the browser window.
   cargoStatusWindow = new BrowserWindow({
     height: 1000,
@@ -23,6 +24,10 @@ export function createCargoStatusWindow(): void {
 
   // Open the DevTools.
   cargoStatusWindow.webContents.openDevTools();
+
+  mapWindow = mpWindow;
+
+  return cargoStatusWindow;
 }
 
 // addCargo button clicked event handler
@@ -40,7 +45,11 @@ export function deliveredHandler() {
       if (!err) {
         if (result) {
           console.log("Cargo updated succesfully");
+
           updateCargoList();
+
+          mapWindow.webContents.send("click:hideMarker", true);
+
         } else {
           console.log("Cargo update failed");
         }
@@ -57,7 +66,10 @@ export function deleteHandler() {
       if (!err) {
         if (result) {
           console.log("Cargo deleted succesfully");
+          
           updateCargoList();
+
+          mapWindow.webContents.send("click:deleteMarker", true);
         } else {
           console.log("Cargo deleted failed");
         }

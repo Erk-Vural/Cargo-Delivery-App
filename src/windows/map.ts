@@ -5,7 +5,8 @@ import { findCargos } from "../services/cargoService";
 // Create Map window
 let mapWindow: BrowserWindow;
 
-export function createMapWindow(): void {
+
+export function createMapWindow(cargoStatusWindow:BrowserWindow): any {
   // Create the browser window.
   mapWindow = new BrowserWindow({
     height: 1000,
@@ -22,29 +23,19 @@ export function createMapWindow(): void {
 
   // Open the DevTools.
   mapWindow.webContents.openDevTools();
+
+  return mapWindow;
 }
 
 export function markerList(): void {
   ipcMain.on("load:markerlist", (e, arg) => {
     findCargos((err: any, cargos: any) => {
       if (!err) {
-        console.log("Window marker list works");
 
         mapWindow.webContents.send("marker:list", cargos);
       } else {
         console.log(err);
       }
     });
-  });
-}
-
-export function updateMarkers(): void {
-  findCargos((err: any, cargos: any) => {
-    if (!err) {
-
-      mapWindow.webContents.send("marker:list", cargos);
-    } else {
-      console.log(err);
-    }
   });
 }

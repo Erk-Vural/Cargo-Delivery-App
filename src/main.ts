@@ -46,5 +46,9 @@ app.on("window-all-closed", () => {
   }
 });
 
+
+function getMarkers() {
+  throw new Error("Function not implemented.");
+}
 // In this file you can include the rest of your app"s specific main process
 // code. You can also put them in separate files and require them here.
