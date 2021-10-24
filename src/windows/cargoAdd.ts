@@ -2,6 +2,7 @@ import { BrowserWindow, ipcMain } from "electron";
 import * as path from "path";
 import { createCargo } from "../services/cargoService";
 import { updateCargoList } from "./cargoStatus";
+import { updateMarkers } from "./map";
 
 // Create Cargo Adress window
 let cargoAddWindow: BrowserWindow;
@@ -41,8 +42,10 @@ export function cargoAdd(): void {
         arg.delivered,
         (err: any, cargo: any) => {
           if (!err) {
-            console.log(cargo);
+
             updateCargoList();
+            updateMarkers();
+
             cargoAddWindow.close();
           } else {
             console.log(err);

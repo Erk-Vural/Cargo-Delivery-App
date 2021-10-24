@@ -48,9 +48,6 @@ loader.load().then(() => {
       }
     });
   });
-
-  // Adds a marker at the center of the map.
-  addMarker(startPoint);
 });
 
 // Utils
