@@ -51,18 +51,17 @@ loader.load().then(() => {
 
         const place = {
           title: cargo.clientName,
-          latLng: new google.maps.LatLng(
-            Number(cargo.lat),
-            Number(cargo.lng)
-          ),
+          latLng: new google.maps.LatLng(Number(cargo.lat), Number(cargo.lng)),
         };
 
         places.push(place);
         addMarker(latLang, false, cargo.clientName);
       }
     });
+
     // Change Courrier position
     ipcRenderer.on("courrier:add", (e, arg) => {
+      deleteMarkers();
       if (e) {
         console.log(e);
       } else {
@@ -73,7 +72,7 @@ loader.load().then(() => {
       }
     });
 
-    // Adds a marker at the center of the map.
+    // Adds a marker at  Courrier position
     addMarker(currentPosition, true, "courier");
 
     // Find Shortest

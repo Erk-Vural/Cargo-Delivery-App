@@ -10,7 +10,7 @@ export function updateCourrier(locX: string, locY: string, callback: any) {
   Courrier.findOneAndUpdate(
     filter,
     update,
-    { upsert: true },
+    { upsert: false },
     function (err: any, user: any) {
       if (err) {
         return callback(err);

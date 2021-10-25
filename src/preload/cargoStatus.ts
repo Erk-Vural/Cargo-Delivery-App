@@ -48,11 +48,11 @@ window.addEventListener("DOMContentLoaded", () => {
       cargoDiv.appendChild(clientName);
 
       const lat = document.createElement("p");
-      lat.innerText = "Location X: " + cargo.lat;
+      lat.innerText = "Lat: " + cargo.lat;
       cargoDiv.appendChild(lat);
 
       const lng = document.createElement("p");
-      lng.innerText = "Location Y: " + cargo.lng;
+      lng.innerText = "Lng : " + cargo.lng;
       cargoDiv.appendChild(lng);
 
       // Delivered checkbox

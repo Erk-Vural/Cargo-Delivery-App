@@ -1,6 +1,6 @@
 import { app, BrowserWindow } from "electron";
 
-import { cargoAdd } from "./windows/cargoAdd";
+import { cargoAdd, changeCourrier } from "./windows/cargoAdd";
 import {
   cargoList,
   deleteHandler,
@@ -22,6 +22,8 @@ app.on("ready", () => {
   // Cargo Window
   cargoAdd();
   cargoList();
+
+  changeCourrier();
 
   deliveredHandler();
   deleteHandler();
