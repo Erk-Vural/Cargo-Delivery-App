@@ -16,7 +16,7 @@ let routeResults: any[] = [];
 
 // Load map
 let markers: google.maps.Marker[] = [];
-const places: { latLng: any }[] = [];
+let places: { latLng: any }[] = [];
 
 const loader = new Loader({
   apiKey: "AIzaSyDv9iNeDL_kmNc5OU-syA4Ijhxq5QoS6TY",
@@ -66,6 +66,9 @@ loader.load().then(() => {
 
     // Find Shortest
     findNearestPlace();
+
+    // Empty list places list for each update
+    places = [];
   });
 
   // This event listener will call addMarker() when the map is clicked.
@@ -129,8 +132,8 @@ function findShortest() {
       shortestLength = routeResults[i].routes[0].legs[0].distance.value;
     }
   }
-  console.log(routeResults[shortestIndex].request.destination.location);
   currentPosition = routeResults[shortestIndex].request.destination.location;
+
   directionsDisplay.setDirections(routeResults[shortestIndex]);
 }
 
@@ -140,13 +143,14 @@ function findShortest() {
 function addMarker(
   position: google.maps.LatLng | google.maps.LatLngLiteral,
   carrier: boolean,
-  title: string
+  label: string
 ) {
   const marker = new google.maps.Marker({
     position,
     map,
-    title: title,
+    label: label,
   });
+
   if (carrier) {
     marker.setIcon("http://maps.google.com/mapfiles/ms/icons/green-dot.png");
   }
