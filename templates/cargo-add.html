@@ -16,12 +16,21 @@
     />
   </head>
   <body>
-    <div class="wrapper">
+    <div id="cargoadd-wrapper">
       <h1>Add new Cargo Address</h1>
       <form id="cargoadd-form">
         <input type="text" id="cargoadd-name" placeholder="Client Name" />
-        <input type="text" id="cargoadd-locX" placeholder="Client Location X" />
-        <input type="text" id="cargoadd-locY" placeholder="Client Location Y" />
+        <input type="text" id="cargoadd-lat" placeholder="Client Lat" />
+        <input type="text" id="cargoadd-lng" placeholder="Client Lng" />
+
+        <button type="submit">Add</button>
+      </form>
+    </div>
+    <div id="courrier-wrapper">
+      <h1>Change courrier's location</h1>
+      <form id="courrier-form">
+        <input type="text" id="courrier-lat" placeholder="Courrier Lat" />
+        <input type="text" id="courrier-lng" placeholder="Courrier Lng" />
 
         <button type="submit">Add</button>
       </form>

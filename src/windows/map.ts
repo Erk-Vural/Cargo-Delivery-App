@@ -1,6 +1,6 @@
 import { BrowserWindow, ipcMain } from "electron";
 import * as path from "path";
-import { findCargos } from "../services/cargoService";
+import { findCargos, findCourrier } from "../services/cargoService";
 
 // Create Map window
 let mapWindow: BrowserWindow;
@@ -52,3 +52,14 @@ export function updateMarkers(): void {
 ipcMain.on("click:addMarker", (e, arg) => {
   cargoStatusWindow.webContents.send("map:addMarker", arg);
 });
+
+
+export function addCourier(): void {
+  findCourrier((err: any, courier: any) => {
+    if (!err) {
+      mapWindow.webContents.send("courrier:add", courier);
+    } else {
+      console.log(err);
+    }
+  });
+}

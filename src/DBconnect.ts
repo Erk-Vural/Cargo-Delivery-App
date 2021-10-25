@@ -1,8 +1,19 @@
 import mongoose = require("mongoose");
 import { ConnectOptions } from "mongoose";
 
+//  Config for Mongo atlas connection string variables
+export const dbUserName = "erk";
+export const dbUserPassword = "hgjM69hNKYTzaR4";
+export const dbDBName = "cargoDB";
+
 const connectionString =
-  "mongodb+srv://erk:hgjM69hNKYTzaR4@cluster0.dtvlw.mongodb.net/cargoDB?retryWrites=true&w=majority";
+  "mongodb+srv://" +
+  dbUserName +
+  ":" +
+  dbUserPassword +
+  "@cluster0.dtvlw.mongodb.net/" +
+  dbDBName +
+  "?retryWrites=true&w=majority";
 
 export function DBconnect(): void {
   try {

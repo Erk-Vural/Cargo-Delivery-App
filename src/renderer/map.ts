@@ -61,6 +61,18 @@ loader.load().then(() => {
         addMarker(latLang, false, cargo.clientName);
       }
     });
+    // Change Courrier position
+    ipcRenderer.on("courrier:add", (e, arg) => {
+      if (e) {
+        console.log(e);
+      } else {
+        currentPosition = {
+          lat: arg.lat,
+          lng: arg.lng,
+        };
+      }
+    });
+
     // Adds a marker at the center of the map.
     addMarker(currentPosition, true, "courier");
 

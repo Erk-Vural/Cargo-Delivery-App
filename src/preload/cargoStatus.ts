@@ -47,13 +47,13 @@ window.addEventListener("DOMContentLoaded", () => {
       clientName.innerText = "Client Name: " + cargo.clientName;
       cargoDiv.appendChild(clientName);
 
-      const locationX = document.createElement("p");
-      locationX.innerText = "Location X: " + cargo.locationX;
-      cargoDiv.appendChild(locationX);
+      const lat = document.createElement("p");
+      lat.innerText = "Location X: " + cargo.lat;
+      cargoDiv.appendChild(lat);
 
-      const locationY = document.createElement("p");
-      locationY.innerText = "Location Y: " + cargo.locationY;
-      cargoDiv.appendChild(locationY);
+      const lng = document.createElement("p");
+      lng.innerText = "Location Y: " + cargo.lng;
+      cargoDiv.appendChild(lng);
 
       // Delivered checkbox
       const delivered = <HTMLInputElement>document.createElement("INPUT");

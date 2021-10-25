@@ -1,6 +1,38 @@
+import { Courrier } from "../models/courrierModel";
 import { Cargo } from "../models/cargoModel";
 
 // Api to communicate with cloud DB
+
+export function updateCourrier(locX: string, locY: string, callback: any) {
+  const filter = { lat: locX, lng: locY };
+  const update = { lat: locX, lng: locY };
+
+  Courrier.findOneAndUpdate(
+    filter,
+    update,
+    { upsert: true },
+    function (err: any, user: any) {
+      if (err) {
+        return callback(err);
+      }
+      if (!user) {
+        return callback(null, false);
+      } else {
+        return callback(null, true);
+      }
+    }
+  );
+}
+
+export function findCourrier(callback: any) {
+  Courrier.find((err: any, result: any) => {
+    if (err) {
+      return callback(err);
+    } else {
+      return callback(err, result);
+    }
+  });
+}
 
 export function createCargo(
   name: string,
@@ -11,8 +43,8 @@ export function createCargo(
 ) {
   const cargo = new Cargo({
     clientName: name,
-    locationX: locX,
-    locationY: locY,
+    lat: locX,
+    lng: locY,
     delivered: del,
   });
 

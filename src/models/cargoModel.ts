@@ -2,8 +2,8 @@ import mongoose = require("mongoose");
 
 const cargoSchema = new mongoose.Schema({
   clientName: String,
-  locationX: String,
-  locationY: String,
+  lat: String,
+  lng: String,
   delivered: Boolean,
 });
 

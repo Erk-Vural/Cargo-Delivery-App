@@ -1,6 +1,6 @@
 import { BrowserWindow, ipcMain } from "electron";
 import * as path from "path";
-import { createCargo } from "../services/cargoService";
+import { createCargo, updateCourrier } from "../services/cargoService";
 import { updateCargoList } from "./cargoStatus";
 import { updateMarkers } from "./map";
 
@@ -36,11 +36,11 @@ export function createCargoAddWindow(parentWindow: BrowserWindow): any {
 
 export function cargoAdd(): void {
   ipcMain.on("cargo:add", (e, arg) => {
-    if (arg.clientName !== "" || arg.locationX !== "" || arg.locationY !== "") {
+    if (arg.clientName !== "" || arg.lat !== "" || arg.lng !== "") {
       createCargo(
         arg.clientName,
-        arg.locationX,
-        arg.locationY,
+        arg.lat,
+        arg.lng,
         arg.delivered,
         (err: any, cargo: any) => {
           if (!err) {
@@ -55,6 +55,22 @@ export function cargoAdd(): void {
       );
     } else {
       console.log("Cargo info can't be empty");
+    }
+  });
+}
+
+export function changeCourrier(): void {
+  ipcMain.on("courrier:change", (e, arg) => {
+    if (arg.lat !== "" || arg.lng !== "") {
+      updateCourrier(arg.lat, arg.lng, (err: any, cargos: any) => {
+        if (!err) {
+          console.log("Courrier update is successful");
+        } else {
+          console.log(err);
+        }
+      });
+    } else {
+      console.log("Courrier info can't be empty");
     }
   });
 }
