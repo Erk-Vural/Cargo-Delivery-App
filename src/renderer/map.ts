@@ -45,15 +45,15 @@ loader.load().then(() => {
 
       if (!cargo.delivered) {
         const latLang = {
-          lat: Number(cargo.locationX),
-          lng: Number(cargo.locationY),
+          lat: Number(cargo.lat),
+          lng: Number(cargo.lng),
         };
 
         const place = {
           title: cargo.clientName,
           latLng: new google.maps.LatLng(
-            Number(cargo.locationX),
-            Number(cargo.locationY)
+            Number(cargo.lat),
+            Number(cargo.lng)
           ),
         };
 
