@@ -16,7 +16,7 @@ let routeResults: any[] = [];
 
 // Load map
 let markers: google.maps.Marker[] = [];
-let places: { latLng: any }[] = [];
+let points: { latLng: any }[] = [];
 
 const loader = new Loader({
   apiKey: "AIzaSyDv9iNeDL_kmNc5OU-syA4Ijhxq5QoS6TY",
@@ -54,7 +54,7 @@ loader.load().then(() => {
           latLng: new google.maps.LatLng(Number(cargo.lat), Number(cargo.lng)),
         };
 
-        places.push(place);
+        points.push(place);
         addMarker(latLang, false, cargo.clientName);
       }
     });
@@ -76,10 +76,10 @@ loader.load().then(() => {
     addMarker(currentPosition, true, "courier");
 
     // Find Shortest
-    findNearestPlace();
+    findNearestCargo();
 
-    // Empty list places list for each update
-    places = [];
+    // Empty list points list for each update
+    points = [];
   });
 
   // This event listener will call addMarker() when the map is clicked.
@@ -92,14 +92,13 @@ loader.load().then(() => {
 
 // Direction Utils
 
-// Loops through all inteesting places to calculate route between our current position
-// and that place.
-function findNearestPlace() {
-  let i = places.length;
-  size = places.length;
+// Loops through all cargos to calculate route between our current position and that place.
+function findNearestCargo() {
+  let i = points.length;
+  size = points.length;
   routeResults = [];
   while (i--) {
-    calcRoute(places[i].latLng, storeResult);
+    calcRoute(points[i].latLng, storeResult);
   }
 }
 
@@ -130,8 +129,7 @@ function storeResult(data: any) {
   }
 }
 
-// Goes through all routes stored and finds which one is the shortest. It then
-// sets the shortest route on the map for the user to see.
+// Goes through all routes stored and finds which one is the shortest.
 function findShortest() {
   let i = routeResults.length;
   let shortestIndex = 0;
@@ -143,7 +141,10 @@ function findShortest() {
       shortestLength = routeResults[i].routes[0].legs[0].distance.value;
     }
   }
+  // Update position on courrier
   currentPosition = routeResults[shortestIndex].request.destination.location;
+
+  console.log(routeResults)
 
   directionsDisplay.setDirections(routeResults[shortestIndex]);
 }
